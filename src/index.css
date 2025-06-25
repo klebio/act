@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 33% 95%;        /* Facebook Light #EDF0F5 */
+    --foreground: 0 0% 20%;           /* Facebook Dark #333333 */
+    --card: 0 0% 100%;                /* Branco #FFFFFF */
+    --card-foreground: 0 0% 20%;      /* Facebook Dark #333333 */
+    --popover: 0 0% 100%;             /* Branco #FFFFFF */
+    --popover-foreground: 0 0% 20%;   /* Facebook Dark #333333 */
+    --primary: 214 89% 52%;           /* Facebook Primary #1877F2 */
+    --primary-foreground: 0 0% 100%;  /* Branco #FFFFFF */
+    --secondary: 210 33% 95%;         /* Facebook Light #EDF0F5 */
+    --secondary-foreground: 220 10% 57%; /* Facebook Grey #898F9C */
+    --muted: 210 33% 95%;             /* Facebook Light #EDF0F5 */
+    --muted-foreground: 220 10% 57%;  /* Facebook Grey #898F9C */
+    --accent: 214 89% 52%;            /* Facebook Primary #1877F2 */
+    --accent-foreground: 0 0% 100%;   /* Branco #FFFFFF */
+    --destructive: 0 84% 60%;         /* Mantendo a cor de erro */
+    --destructive-foreground: 0 0% 98%; /* Mantendo a cor de texto de erro */
+    --border: 220 10% 80%;            /* Versão mais clara do Facebook Grey */
+    --input: 220 10% 80%;             /* Versão mais clara do Facebook Grey */
+    --ring: 214 89% 52%;              /* Facebook Primary #1877F2 */
+    --radius: 0.5rem;                 /* Bordas menos arredondadas, mais no estilo Facebook */
+    
+    /* Cores do Facebook originais (mantidas para referência) */
+    --facebook-primary: 214 89% 52%;  /* #1877F2 */
+    --facebook-grey: 220 10% 57%;     /* #898F9C */
+    --facebook-light: 210 33% 95%;    /* #EDF0F5 */
+    --facebook-dark: 0 0% 20%;        /* #333333 */
+  }
+
+  .dark {
+    --background: 220 15% 8%;
+    --foreground: 210 33% 95%;        /* Facebook Light #EDF0F5 */
+    --card: 220 15% 10%;
+    --card-foreground: 210 33% 95%;   /* Facebook Light #EDF0F5 */
+    --popover: 220 15% 10%;
+    --popover-foreground: 210 33% 95%; /* Facebook Light #EDF0F5 */
+    --primary: 214 89% 52%;           /* Facebook Primary #1877F2 */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 220 15% 15%;
+    --secondary-foreground: 220 10% 57%; /* Facebook Grey #898F9C */
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 57%;  /* Facebook Grey #898F9C */
+    --accent: 214 89% 52%;            /* Facebook Primary #1877F2 */
+    --accent-foreground: 0 0% 100%;   /* Branco #FFFFFF */
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 15% 20%;
+    --input: 220 15% 20%;
+    --ring: 214 89% 52%;              /* Facebook Primary #1877F2 */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .font-display {
+    font-family: 'Inter', sans-serif; /* Fonte padrão do Facebook */
+  }
+}
+
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(135deg, #1877F2 0%, #0a3d7a 100%); /* Gradiente baseado na cor do Facebook */
+  }
+  
+  .gradient-accent {
+    background: linear-gradient(135deg, #1877F2 0%, #4293f5 100%); /* Gradiente baseado na cor do Facebook */
+  }
+  
+  .glass-effect {
+    backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  .music-pattern {
+    background-color: #EDF0F5; /* Fundo simples no estilo Facebook */
+    background-image: none; /* Removendo o padrão anterior */
+  }
+  
+  .chord-card {
+    @apply bg-white border border-gray-200 rounded-md p-4 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+  
+  .input-music {
+    @apply w-full px-4 py-3 rounded-md border border-gray-300 focus:border-facebook-primary focus:ring-2 focus:ring-facebook-primary/20 transition-all duration-300 bg-white;
+  }
+  
+  .btn-music {
+    @apply px-6 py-2 rounded-md font-medium transition-all duration-300 transform active:scale-95 shadow-sm;
+  }
+  
+  .btn-primary {
+    @apply btn-music bg-facebook-primary text-white hover:bg-facebook-primary/90;
+  }
+  
+  .btn-secondary {
+    @apply btn-music bg-white text-facebook-primary border border-gray-300 hover:bg-gray-50;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float 6s ease-in-out infinite 2s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce 3s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(-25%);
+    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+  }
+  50% {
+    transform: translateY(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}

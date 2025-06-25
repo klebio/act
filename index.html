@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saleiro Music - Transposição de Acordes</title>
+    <meta name="description" content="Transponha acordes musicais de forma fácil e precisa com o Saleiro Music" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>𝄞</text></svg>">
+    <style>
+        /* Cores do Facebook */
+        :root {
+            --facebook-primary: #1877F2;    /* Azul principal do Facebook */
+            --facebook-grey: #898F9C;       /* Cinza do Facebook */
+            --facebook-light: #EDF0F5;      /* Cinza claro/fundo */
+            --facebook-dark: #333333;       /* Cinza escuro/texto */
+            --facebook-white: #FFFFFF;      /* Branco */
+            --facebook-black: #000000;      /* Preto */
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--facebook-light);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--facebook-white);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 90px;
+            height: 90px;
+            background-color: var(--facebook-primary);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 60px;
+        }
+        
+        .logo-text h1 {
+            margin: 0;
+            color: var(--facebook-primary);
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .logo-text p {
+            margin: 0;
+            font-size: 14px;
+            color: var(--facebook-grey);
+        }
+        
+        .hero {
+            text-align: center;
+            margin: 50px 0;
+        }
+        
+        .hero h2 {
+            font-size: 36px;
+            color: var(--facebook-primary);
+            margin-bottom: 15px;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--facebook-grey);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background-color: var(--facebook-white);
+            border-radius: 8px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card h3 {
+            color: var(--facebook-dark);
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        
+        .input-group {
+            margin-bottom: 16px;
+        }
+        
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--facebook-grey);
+            margin-bottom: 8px;
+        }
+        
+        .input-music {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .input-music:focus {
+            border-color: var(--facebook-primary);
+            box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+            outline: none;
+        }
+        
+        textarea.input-music {
+            min-height: 120px;
+            resize: none;
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .btn {
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: var(--facebook-primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #166fe5;
+        }
+        
+        .btn-secondary {
+            background-color: var(--facebook-white);
+            border: 1px solid #ddd;
+            color: var(--facebook-primary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .result {
+            background-color: var(--facebook-light);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .result-content {
+            font-family: monospace;
+            font-size: 18px;
+            white-space: pre-wrap;
+            color: var(--facebook-dark);
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <div class="logo-icon">𝄞</div>
+                        <div class="logo-text">
+                            <h1>Saleiro Music</h1>
+                            <p>Transposição de Acordes</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" id="loginBtn">Entrar</button>
+                </div>
+            </div>
+        </header>
+        
+        <main class="container">
+            <section class="hero">
+                <h2>Transponha seus acordes</h2>
+                <p>Mude a tonalidade de suas músicas de forma rápida e precisa. Perfeito para músicos de todos os níveis!</p>
+            </section>
+            
+            <section class="card">
+                <h3>Como você quer inserir os acordes?</h3>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="textInputBtn">Digitar acordes</button>
+                    <button class="btn btn-secondary" id="fileInputBtn">Upload de arquivo .txt</button>
+                    <input type="file" id="fileInput" accept=".txt" style="display: none;">
+                </div>
+            </section>
+            
+            <section class="card" id="textInputSection">
+                <h3>Digite os acordes</h3>
+                <textarea class="input-music" id="chordsInput" placeholder="Digite os acordes aqui... Ex: C | Am | F | G"></textarea>
+            </section>
+            
+            <section class="card">
+                <h3>Configurações de transposição</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div class="input-group">
+                        <label>Tonalidade atual</label>
+                        <select class="input-music" id="originalKey">
+                            <option value="C">C</option>
+                            <option value="C#/Db">C#/Db</option>
+                            <option value="D">D</option>
+                            <option value="D#/Eb">D#/Eb</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="F#/Gb">F#/Gb</option>
+                            <option value="G">G</option>
+                            <option value="G#/Ab">G#/Ab</option>
+                            <option value="A">A</option>
+                            <option value="A#/Bb">A#/Bb</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Tonalidade alvo</label>
+                        <select class="input-music" id="targetKey">
+                            <option value="C">C</option>
+                            <option value="C#/Db">C#/Db</option>
+                            <option value="D" selected>D</option>
+                            <option value="D#/Eb">D#/Eb</option>
+                            <option value="E">E</option>
+                            <option value="F">F</option>
+                            <option value="F#/Gb">F#/Gb</option>
+                            <option value="G">G</option>
+                            <option value="G#/Ab">G#/Ab</option>
+                            <option value="A">A</option>
+                            <option value="A#/Bb">A#/Bb</option>
+                            <option value="B">B</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>Preferência de acidentes</label>
+                        <select class="input-music" id="accidentalPreference">
+                            <option value="sharp">Sustenidos (#)</option>
+                            <option value="flat">Bemóis (b)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="transposeBtn">
+                        Transpor acordes
+                    </button>
+                    <button class="btn btn-secondary" id="clearBtn">
+                        Limpar
+                    </button>
+                </div>
+            </section>
+            
+            <section class="card" id="resultSection" style="display: none;">
+                <h3>Resultado da transposição</h3>
+                <div class="result">
+                    <div class="result-header">
+                        <span>Transposição de <span id="resultFrom">C</span> para <span id="resultTo">D</span></span>
+                        <div>
+                            <button class="btn btn-secondary" id="copyBtn">
+                                Copiar
+                            </button>
+                            <button class="btn btn-secondary" id="downloadBtn">
+                                Download
+                            </button>
+                        </div>
+                    </div>
+                    <div class="result-content" id="resultContent"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Classe TransposerEngine
+        class TransposerEngine {
+          constructor() {
+            // Mapeamento de notas com sustenidos e bemóis
+            this.chromaticScale = [
+              'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'
+            ];
+            
+            this.chromaticScaleFlats = [
+              'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B'
+            ];
+            
+            // Mapeamento de equivalências entre sustenidos e bemóis
+            this.enharmonicMap = {
+              'C#': 'Db', 'Db': 'C#',
+              'D#': 'Eb', 'Eb': 'D#',
+              'F#': 'Gb', 'Gb': 'F#',
+              'G#': 'Ab', 'Ab': 'G#',
+              'A#': 'Bb', 'Bb': 'A#'
+            };
+            
+            // Regex para identificar acordes (melhorada para capturar acordes com baixo)
+            // Formato: Nota + sufixo opcional + barra opcional + nota do baixo opcional
+            this.chordRegex = /([A-G][#b]?)([^A-G#b\/\s]*)(?:\/([A-G][#b]?))?/g;
+          }
+          
+          /**
+           * Normaliza uma nota para o formato padrão
+           */
+          normalizeNote(note) {
+            // Remove espaços e converte para maiúscula
+            note = note.trim().toUpperCase();
+            
+            // Converte bemóis alternativos
+            note = note.replace('♭', 'b').replace('♯', '#');
+            
+            return note;
+          }
+          
+          /**
+           * Calcula a diferença em semitons entre duas notas
+           */
+          calculateSemitones(fromKey, toKey) {
+            fromKey = this.normalizeNote(fromKey);
+            toKey = this.normalizeNote(toKey);
+            
+            // Lidar com tonalidades compostas (C#/Db)
+            if (fromKey.includes('/')) fromKey = fromKey.split('/')[0];
+            if (toKey.includes('/')) toKey = toKey.split('/')[0];
+            
+            // Encontra o índice das notas na escala cromática
+            let fromIndex = this.chromaticScale.indexOf(fromKey);
+            if (fromIndex === -1) {
+              fromIndex = this.chromaticScaleFlats.indexOf(fromKey);
+            }
+            
+            let toIndex = this.chromaticScale.indexOf(toKey);
+            if (toIndex === -1) {
+              toIndex = this.chromaticScaleFlats.indexOf(toKey);
+            }
+            
+            if (fromIndex === -1 || toIndex === -1) {
+              throw new Error(`Nota inválida: ${fromKey} ou ${toKey}`);
+            }
+            
+            // Calcula a diferença
+            let semitones = toIndex - fromIndex;
+            if (semitones < 0) {
+              semitones += 12;
+            }
+            
+            return semitones;
+          }
+          
+          /**
+           * Transpõe uma nota individual
+           */
+          transposeNote(note, semitones, useFlats = false) {
+            note = this.normalizeNote(note);
+            
+            // Encontra o índice da nota
+            let noteIndex = this.chromaticScale.indexOf(note);
+            if (noteIndex === -1) {
+              noteIndex = this.chromaticScaleFlats.indexOf(note);
+            }
+            
+            if (noteIndex === -1) {
+              return note; // Retorna a nota original se não encontrar
+            }
+            
+            // Calcula o novo índice
+            let newIndex = (noteIndex + semitones) % 12;
+            
+            // Retorna a nota transposta
+            if (useFlats) {
+              return this.chromaticScaleFlats[newIndex];
+            } else {
+              return this.chromaticScale[newIndex];
+            }
+          }
+          
+          /**
+           * Transpõe um acorde individual
+           */
+          transposeChord(chord, semitones, useFlats = false) {
+            return chord.replace(this.chordRegex, (match, root, suffix, bass) => {
+              const transposedRoot = this.transposeNote(root, semitones, useFlats);
+              
+              // Se tiver baixo, transpõe também
+              if (bass) {
+                const transposedBass = this.transposeNote(bass, semitones, useFlats);
+                return transposedRoot + suffix + '/' + transposedBass;
+              }
+              
+              return transposedRoot + suffix;
+            });
+          }
+          
+          /**
+           * Função principal de transposição
+           */
+          transpose(input, fromKey, toKey, accidentalPreference = 'sharp') {
+            try {
+              // Calcula os semitons de diferença
+              const semitones = this.calculateSemitones(fromKey, toKey);
+              const useFlats = accidentalPreference === 'flat';
+              
+              // Divide o input em linhas para preservar a formatação
+              const lines = input.split('\n');
+              
+              // Transpõe cada linha
+              const transposedLines = lines.map(line => {
+                // Se a linha contém acordes (tem letras maiúsculas seguidas de possíveis modificadores)
+                if (/[A-G][#b]?/.test(line)) {
+                  return this.transposeChord(line, semitones, useFlats);
+                }
+                // Se não contém acordes, retorna a linha original (pode ser letra da música)
+                return line;
+              });
+              
+              return transposedLines.join('\n');
+              
+            } catch (error) {
+              console.error('Erro na transposição:', error);
+              throw new Error('Erro ao transpor os acordes. Verifique se as tonalidades são válidas.');
+            }
+          }
+          
+          /**
+           * Valida se uma string contém acordes válidos
+           */
+          validateChords(input) {
+            const chordMatches = input.match(this.chordRegex);
+            return chordMatches && chordMatches.length > 0;
+          }
+          
+          /**
+           * Extrai todos os acordes únicos de um texto
+           */
+          extractChords(input) {
+            const matches = input.match(this.chordRegex) || [];
+            return [...new Set(matches)].sort();
+          }
+          
+          /**
+           * Detecta a tonalidade provável baseada nos acordes presentes
+           * Implementação simplificada
+           */
+          detectKey(input) {
+            const chords = this.extractChords(input);
+            
+            if (chords.length === 0) return 'C';
+            
+            // Implementação básica: assume que o primeiro acorde é a tonalidade
+            // Em uma implementação real, seria necessário analisar os padrões de acordes
+            const firstChord = chords[0];
+            const rootNote = firstChord.match(/^[A-G][#b]?/)[0];
+            
+            return rootNote;
+          }
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elementos DOM
+            const loginBtn = document.getElementById('loginBtn');
+            const textInputBtn = document.getElementById('textInputBtn');
+            const fileInputBtn = document.getElementById('fileInputBtn');
+            const fileInput = document.getElementById('fileInput');
+            const chordsInput = document.getElementById('chordsInput');
+            const originalKey = document.getElementById('originalKey');
+            const targetKey = document.getElementById('targetKey');
+            const accidentalPreference = document.getElementById('accidentalPreference');
+            const transposeBtn = document.getElementById('transposeBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const resultSection = document.getElementById('resultSection');
+            const resultFrom = document.getElementById('resultFrom');
+            const resultTo = document.getElementById('resultTo');
+            const resultContent = document.getElementById('resultContent');
+            const copyBtn = document.getElementById('copyBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            // Eventos
+            fileInputBtn.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file && file.type === 'text/plain') {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        chordsInput.value = e.target.result;
+                        alert('Arquivo carregado com sucesso!');
+                    };
+                    reader.readAsText(file);
+                } else {
+                    alert('Por favor, selecione um arquivo .txt válido.');
+                }
+            });
+            
+            transposeBtn.addEventListener('click', () => {
+                if (!chordsInput.value.trim()) {
+                    alert('Por favor, insira alguns acordes para transpor.');
+                    return;
+                }
+                
+                try {
+                    const transposer = new TransposerEngine();
+                    const result = transposer.transpose(
+                        chordsInput.value,
+                        originalKey.value,
+                        targetKey.value,
+                        accidentalPreference.value
+                    );
+                    
+                    resultContent.textContent = result;
+                    resultFrom.textContent = originalKey.value;
+                    resultTo.textContent = targetKey.value;
+                    resultSection.style.display = 'block';
+                    
+                    // Salvar no histórico se o usuário estiver logado
+                    if (currentUser) {
+                        const historyItem = {
+                            id: Date.now(),
+                            date: new Date().toISOString(),
+                            originalKey: originalKey.value,
+                            targetKey: targetKey.value,
+                            originalChords: chordsInput.value,
+                            transposedChords: result
+                        };
+                        
+                        const existingHistory = JSON.parse(localStorage.getItem(`history_${currentUser.email}`) || '[]');
+                        const newHistory = [historyItem, ...existingHistory].slice(0, 50); // Manter apenas 50 itens
+                        localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(newHistory));
+                        
+                        alert('Transposição salva no seu histórico!');
+                    } else {
+                        alert('Faça login para salvar esta transposição no seu histórico.');
+                    }
+                } catch (error) {
+                    alert('Erro na transposição: ' + error.message);
+                }
+            });
+            
+            clearBtn.addEventListener('click', () => {
+                chordsInput.value = '';
+                resultSection.style.display = 'none';
+            });
+            
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(resultContent.textContent)
+                    .then(() => alert('Copiado para a área de transferência!'))
+                    .catch(err => console.error('Erro ao copiar: ', err));
+            });
+            
+            downloadBtn.addEventListener('click', () => {
+                const blob = new Blob([resultContent.textContent], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `acordes_transpostos_${originalKey.value}_para_${targetKey.value}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('Download iniciado!');
+            });
+            
+            // Verificar se o usuário já está logado
+            let currentUser = JSON.parse(localStorage.getItem('saleiroUser') || 'null');
+            
+            // Atualizar o botão de login/logout
+            function updateLoginButton() {
+                if (currentUser) {
+                    loginBtn.textContent = 'Sair';
+                    loginBtn.classList.add('btn-secondary');
+                    loginBtn.classList.remove('btn-primary');
+                } else {
+                    loginBtn.textContent = 'Entrar';
+                    loginBtn.classList.add('btn-primary');
+                    loginBtn.classList.remove('btn-secondary');
+                }
+            }
+            
+            updateLoginButton();
+            
+            // Função para mostrar o modal de login
+            function showLoginModal() {
+                const modal = document.createElement('div');
+                modal.className = 'login-modal';
+                modal.innerHTML = `
+                    <div class="login-modal-content">
+                        <h2>Entrar / Cadastrar</h2>
+                        <div class="input-group">
+                            <label>Nome</label>
+                            <input type="text" id="loginName" class="input-music" placeholder="Seu nome">
+                        </div>
+                        <div class="input-group">
+                            <label>Email</label>
+                            <input type="email" id="loginEmail" class="input-music" placeholder="seu@email.com">
+                        </div>
+                        <div class="button-group">
+                            <button id="confirmLoginBtn" class="btn btn-primary">Confirmar</button>
+                            <button id="cancelLoginBtn" class="btn btn-secondary">Cancelar</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Adicionar estilos para o modal
+                const style = document.createElement('style');
+                style.textContent = `
+                    .login-modal {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .login-modal-content {
+                        background-color: white;
+                        padding: 24px;
+                        border-radius: 8px;
+                        width: 90%;
+                        max-width: 400px;
+                    }
+                    .history-modal {
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.5);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000;
+                    }
+                    .history-modal-content {
+                        background-color: white;
+                        padding: 24px;
+                        border-radius: 8px;
+                        width: 90%;
+                        max-width: 800px;
+                        max-height: 80vh;
+                        overflow-y: auto;
+                    }
+                    .history-item {
+                        border: 1px solid #eee;
+                        border-radius: 8px;
+                        padding: 12px;
+                        margin-bottom: 12px;
+                    }
+                    .history-item-header {
+                        display: flex;
+                        justify-content: space-between;
+                        margin-bottom: 8px;
+                    }
+                    .history-actions {
+                        display: flex;
+                        gap: 8px;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Eventos do modal
+                document.getElementById('confirmLoginBtn').addEventListener('click', () => {
+                    const name = document.getElementById('loginName').value.trim();
+                    const email = document.getElementById('loginEmail').value.trim();
+                    
+                    if (!name || !email) {
+                        alert('Por favor, preencha todos os campos.');
+                        return;
+                    }
+                    
+                    // Login simples
+                    currentUser = { name, email };
+                    localStorage.setItem('saleiroUser', JSON.stringify(currentUser));
+                    updateLoginButton();
+                    
+                    // Fechar o modal
+                    document.body.removeChild(modal);
+                    
+                    // Adicionar botão de histórico
+                    addHistoryButton();
+                    
+                    alert(`Bem-vindo, ${name}!`);
+                });
+                
+                document.getElementById('cancelLoginBtn').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+            }
+            
+            // Função para fazer logout
+            function logout() {
+                currentUser = null;
+                localStorage.removeItem('saleiroUser');
+                updateLoginButton();
+                
+                // Remover botão de histórico se existir
+                const historyBtn = document.getElementById('historyBtn');
+                if (historyBtn) {
+                    historyBtn.parentElement.removeChild(historyBtn);
+                }
+                
+                alert('Logout realizado com sucesso.');
+            }
+            
+            // Adicionar botão de histórico se o usuário estiver logado
+            function addHistoryButton() {
+                // Verificar se o botão já existe
+                if (document.getElementById('historyBtn')) return;
+                
+                const headerButtons = loginBtn.parentElement;
+                const historyBtn = document.createElement('button');
+                historyBtn.id = 'historyBtn';
+                historyBtn.className = 'btn btn-secondary';
+                historyBtn.innerHTML = 'Histórico';
+                historyBtn.style.marginRight = '10px';
+                
+                headerButtons.insertBefore(historyBtn, loginBtn);
+                
+                // Mostrar o histórico em um popup
+                historyBtn.addEventListener('click', showHistoryModal);
+            }
+            
+            // Mostrar modal de histórico
+            function showHistoryModal() {
+                if (!currentUser) {
+                    alert('Você precisa estar logado para ver o histórico.');
+                    return;
+                }
+                
+                // Buscar histórico do localStorage
+                const history = JSON.parse(localStorage.getItem(`history_${currentUser.email}`) || '[]');
+                
+                if (history.length === 0) {
+                    alert('Você ainda não tem histórico de transposições.');
+                    return;
+                }
+                
+                const modal = document.createElement('div');
+                modal.className = 'history-modal';
+                modal.innerHTML = `
+                    <div class="history-modal-content">
+                        <h2>Seu histórico de transposições</h2>
+                        <div id="historyItems"></div>
+                        <div class="button-group">
+                            <button id="downloadAllHistoryBtn" class="btn btn-primary">Baixar todo histórico</button>
+                            <button id="closeHistoryBtn" class="btn btn-secondary">Fechar</button>
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Adicionar estilos adicionais para o conteúdo do histórico
+                const style = document.createElement('style');
+                style.textContent = `
+                    .history-content {
+                        display: grid;
+                        grid-template-columns: 1fr 1fr;
+                        gap: 16px;
+                        margin: 12px 0;
+                    }
+                    .history-section {
+                        background-color: #f9f9f9;
+                        padding: 12px;
+                        border-radius: 8px;
+                    }
+                    .history-section h4 {
+                        margin-top: 0;
+                        color: var(--facebook-primary);
+                        font-size: 14px;
+                    }
+                    .history-code {
+                        font-family: monospace;
+                        white-space: pre-wrap;
+                        background-color: white;
+                        padding: 12px;
+                        border-radius: 4px;
+                        max-height: 150px;
+                        overflow-y: auto;
+                        font-size: 12px;
+                        line-height: 1.4;
+                    }
+                    .history-filters {
+                        display: flex;
+                        gap: 16px;
+                        margin-bottom: 16px;
+                    }
+                    .history-filters select {
+                        padding: 8px;
+                        border-radius: 8px;
+                        border: 1px solid #ddd;
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                // Adicionar filtros
+                const historyItemsContainer = document.getElementById('historyItems');
+                
+                // Adicionar filtros
+                const filtersDiv = document.createElement('div');
+                filtersDiv.className = 'history-filters';
+                filtersDiv.innerHTML = `
+                    <select id="keyFilter">
+                        <option value="">Todas as tonalidades</option>
+                    </select>
+                    <select id="sortOrder">
+                        <option value="newest">Mais recentes primeiro</option>
+                        <option value="oldest">Mais antigos primeiro</option>
+                    </select>
+                `;
+                historyItemsContainer.parentNode.insertBefore(filtersDiv, historyItemsContainer);
+                
+                // Preencher filtro de tonalidades
+                const keyFilter = document.getElementById('keyFilter');
+                const keys = new Set();
+                history.forEach(item => {
+                    keys.add(item.originalKey);
+                    keys.add(item.targetKey);
+                });
+                
+                keys.forEach(key => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = key;
+                    keyFilter.appendChild(option);
+                });
+                
+                // Renderizar itens do histórico
+                renderHistoryItems(history);
+                
+                // Função para renderizar itens do histórico
+                function renderHistoryItems(items) {
+                    historyItemsContainer.innerHTML = '';
+                    
+                    items.forEach((item, index) => {
+                        const date = new Date(item.date).toLocaleString();
+                        const historyItem = document.createElement('div');
+                        historyItem.className = 'history-item';
+                        
+                        historyItem.innerHTML = `
+                            <div class="history-item-header">
+                                <strong>Transposição de ${item.originalKey} para ${item.targetKey}</strong>
+                                <span>${date}</span>
+                            </div>
+                            <div class="history-content">
+                                <div class="history-section">
+                                    <h4>Acordes originais (${item.originalKey}):</h4>
+                                    <div class="history-code">${item.originalChords}</div>
+                                </div>
+                                <div class="history-section">
+                                    <h4>Acordes transpostos (${item.targetKey}):</h4>
+                                    <div class="history-code">${item.transposedChords}</div>
+                                </div>
+                            </div>
+                            <div class="history-actions">
+                                <button class="btn btn-secondary view-history-btn" data-index="${index}">Usar</button>
+                                <button class="btn btn-secondary download-history-btn" data-index="${index}">Baixar</button>
+                                <button class="btn btn-secondary delete-history-btn" data-index="${index}">Excluir</button>
+                            </div>
+                        `;
+                        historyItemsContainer.appendChild(historyItem);
+                    });
+                    
+                    // Adicionar eventos aos botões
+                    document.querySelectorAll('.view-history-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const index = parseInt(btn.getAttribute('data-index'));
+                            const item = history[index];
+                            
+                            // Preencher os campos com os valores do histórico
+                            chordsInput.value = item.originalChords;
+                            originalKey.value = item.originalKey;
+                            targetKey.value = item.targetKey;
+                            
+                            // Mostrar o resultado
+                            resultContent.textContent = item.transposedChords;
+                            resultFrom.textContent = item.originalKey;
+                            resultTo.textContent = item.targetKey;
+                            resultSection.style.display = 'block';
+                            
+                            // Fechar o modal
+                            document.body.removeChild(modal);
+                            
+                            // Rolar para o resultado
+                            resultSection.scrollIntoView({ behavior: 'smooth' });
+                        });
+                    });
+                    
+                    document.querySelectorAll('.download-history-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const index = parseInt(btn.getAttribute('data-index'));
+                            const item = history[index];
+                            
+                            downloadHistoryItem(item);
+                        });
+                    });
+                    
+                    document.querySelectorAll('.delete-history-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const index = parseInt(btn.getAttribute('data-index'));
+                            if (confirm('Tem certeza que deseja excluir esta transposição do histórico?')) {
+                                history.splice(index, 1);
+                                localStorage.setItem(`history_${currentUser.email}`, JSON.stringify(history));
+                                btn.closest('.history-item').remove();
+                                
+                                if (history.length === 0) {
+                                    document.body.removeChild(modal);
+                                    alert('Histórico vazio. O modal foi fechado.');
+                                }
+                            }
+                        });
+                    });
+                }
+                
+                // Eventos de filtro
+                keyFilter.addEventListener('change', filterHistory);
+                document.getElementById('sortOrder').addEventListener('change', filterHistory);
+                
+                // Função para filtrar histórico
+                function filterHistory() {
+                    const keyFilterValue = keyFilter.value;
+                    const sortOrder = document.getElementById('sortOrder').value;
+                    let filteredHistory = [...history];
+                    
+                    // Aplicar filtro de tonalidade
+                    if (keyFilterValue) {
+                        filteredHistory = filteredHistory.filter(item => 
+                            item.originalKey === keyFilterValue || item.targetKey === keyFilterValue
+                        );
+                    }
+                    
+                    // Aplicar ordenação
+                    if (sortOrder === 'oldest') {
+                        filteredHistory.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    } else {
+                        filteredHistory.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    }
+                    
+                    renderHistoryItems(filteredHistory);
+                }
+                
+                // Baixar todo o histórico
+                document.getElementById('downloadAllHistoryBtn').addEventListener('click', () => {
+                    downloadAllHistory(history);
+                });
+                
+                // Fechar o modal
+                document.getElementById('closeHistoryBtn').addEventListener('click', () => {
+                    document.body.removeChild(modal);
+                });
+            }
+            
+            // Função para baixar um item do histórico
+            function downloadHistoryItem(item) {
+                const content = `Transposição de ${item.originalKey} para ${item.targetKey}
+Data: ${new Date(item.date).toLocaleString()}
+
+ACORDES ORIGINAIS:
+${item.originalChords}
+
+ACORDES TRANSPOSTOS:
+${item.transposedChords}`;
+                
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `transposicao_${item.originalKey}_para_${item.targetKey}_${new Date(item.date).toISOString().slice(0,10)}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('Download iniciado!');
+            }
+            
+            // Função para baixar todo o histórico
+            function downloadAllHistory(history) {
+                let content = `HISTÓRICO DE TRANSPOSIÇÕES - ${currentUser.name} (${currentUser.email})\n\n`;
+                
+                history.forEach((item, index) => {
+                    content += `--- TRANSPOSIÇÃO ${index + 1} ---\n`;
+                    content += `Data: ${new Date(item.date).toLocaleString()}\n`;
+                    content += `De: ${item.originalKey} Para: ${item.targetKey}\n\n`;
+                    content += `ACORDES ORIGINAIS:\n${item.originalChords}\n\n`;
+                    content += `ACORDES TRANSPOSTOS:\n${item.transposedChords}\n\n`;
+                    content += `------------------------------\n\n`;
+                });
+                
+                const blob = new Blob([content], { type: 'text/plain' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `historico_completo_${new Date().toISOString().slice(0,10)}.txt`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert('Download do histórico completo iniciado!');
+            }
+            
+            // Evento do botão de login/logout
+            loginBtn.addEventListener('click', () => {
+                if (currentUser) {
+                    logout();
+                } else {
+                    showLoginModal();
+                }
+            });
+            
+            // Adicionar botão de histórico se o usuário estiver logado
+            if (currentUser) {
+                addHistoryButton();
+            }
+        });
+    </script>
+  </body>
+</html> 
