@@ -314,6 +314,16 @@
                     <div class="result-content" id="resultContent"></div>
                 </div>
             </section>
+            
+            <section class="card" id="historySection" style="display: none;">
+                <h3>Histórico de Transposições</h3>
+                <p>Acesse seu histórico de transposições anteriores.</p>
+                <div class="button-group">
+                    <button class="btn btn-primary" id="historyBtn">
+                        Ver Histórico
+                    </button>
+                </div>
+            </section>
         </main>
     </div>
     
@@ -727,8 +737,8 @@
                     // Fechar o modal
                     document.body.removeChild(modal);
                     
-                    // Adicionar botão de histórico
-                    addHistoryButton();
+                    // Atualizar seção de histórico
+                    updateHistorySection();
                     
                     alert(`Bem-vindo, ${name}!`);
                 });
@@ -744,31 +754,28 @@
                 localStorage.removeItem('saleiroUser');
                 updateLoginButton();
                 
-                // Remover botão de histórico se existir
-                const historyBtn = document.getElementById('historyBtn');
-                if (historyBtn) {
-                    historyBtn.parentElement.removeChild(historyBtn);
+                // Esconder a seção de histórico
+                const historySection = document.getElementById('historySection');
+                if (historySection) {
+                    historySection.style.display = 'none';
                 }
                 
                 alert('Logout realizado com sucesso.');
             }
             
-            // Adicionar botão de histórico se o usuário estiver logado
-            function addHistoryButton() {
-                // Verificar se o botão já existe
-                if (document.getElementById('historyBtn')) return;
+            // Atualizar visibilidade da seção de histórico
+            function updateHistorySection() {
+                const historySection = document.getElementById('historySection');
+                if (historySection) {
+                    historySection.style.display = currentUser ? 'block' : 'none';
+                }
                 
-                const headerButtons = loginBtn.parentElement;
-                const historyBtn = document.createElement('button');
-                historyBtn.id = 'historyBtn';
-                historyBtn.className = 'btn btn-secondary';
-                historyBtn.innerHTML = 'Histórico';
-                historyBtn.style.marginRight = '10px';
-                
-                headerButtons.insertBefore(historyBtn, loginBtn);
-                
-                // Mostrar o histórico em um popup
-                historyBtn.addEventListener('click', showHistoryModal);
+                // Adicionar evento de clique ao botão de histórico se não estiver já adicionado
+                const historyBtn = document.getElementById('historyBtn');
+                if (historyBtn && !historyBtn.hasClickEvent) {
+                    historyBtn.addEventListener('click', showHistoryModal);
+                    historyBtn.hasClickEvent = true;
+                }
             }
             
             // Mostrar modal de histórico
@@ -1060,10 +1067,8 @@ ${item.transposedChords}`;
                 }
             });
             
-            // Adicionar botão de histórico se o usuário estiver logado
-            if (currentUser) {
-                addHistoryButton();
-            }
+            // Atualizar seção de histórico se o usuário estiver logado
+            updateHistorySection();
         });
     </script>
   </body>
